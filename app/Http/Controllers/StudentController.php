@@ -51,9 +51,10 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
+        {
+            $student = Student::find($id);
+            return view('students.view',['student'=>$student]);
+        }
 
     /**
      * Show the form for editing the specified resource.
@@ -74,6 +75,7 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(Request $request, $id)
     {
         $student = Student::find($id);
@@ -97,5 +99,14 @@ class StudentController extends Controller
         $student = Student::find($id);
  $student->delete();
  return redirect()->route('students.index');
+
+    }
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $student = student::where('name', 'like', "%" . $keyword . "%")->paginate(5);
+        return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 }
+
+
