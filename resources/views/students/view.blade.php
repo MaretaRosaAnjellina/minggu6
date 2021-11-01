@@ -13,6 +13,9 @@
                     </div>
                     @endif
 
+                    <img width="150px" src="{{asset('storage/'.$student->photo)}}">
+                    
+
                     <form action="/students/{{$student->id}}" method="get">
                     @csrf
                         <table class="table table-responsive">
